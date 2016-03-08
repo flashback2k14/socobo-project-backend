@@ -39,7 +39,7 @@ app.post("/api/v1/send-grocery-list", function(req, res) {
   var smtpConfig = {
     host: 'smtp.gmail.com',
     port: 465,
-    secure: true, // use SSL
+    secure: true,
     auth: {
         user: 'socobo.project@gmail.com',
         pass: process.env.EMAIL_PASSWORD
@@ -57,7 +57,7 @@ app.post("/api/v1/send-grocery-list", function(req, res) {
   transporter.sendMail(mailOptions, function(error, info) {
     if (error) {
       // response the error
-      res.status(500).send({"msg" : "An Error appears with sending the Mail!"});
+      res.status(500).send({"msg" : "An Error appears with sending the Mail! " + error.message});
     }
     // response the successful sending
     res.status(200).send({"msg": "Grocery List Items send to User! " + info.response});
