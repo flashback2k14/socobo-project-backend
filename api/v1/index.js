@@ -75,8 +75,7 @@ app.post("/api/v1/send-grocery-list", function(req, res) {
       res.status(500).send({type: "error", msg: "An Error appears with sending the Mail!", extra: extraError});
     }
     // response the successful sending
-    var extraInfo = typeof info !== "undefined" || info !== null ? info.response : "No extra information available!";
-    res.status(200).send({type: "success", msg: "Grocery List Items send to User!", extra:  extraInfo});
+    res.status(200).send({type: "success", msg: "Grocery List Items send to User!"});
   });
 });
 
