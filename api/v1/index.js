@@ -2,6 +2,7 @@ var http = require("http");
 var express = require("express");
 var bodyParser = require("body-parser");
 var nodeMailer = require("nodemailer");
+var util = require("./util");
 
 var app = express();
 var port = process.env.PORT || 5005;
@@ -22,19 +23,19 @@ app.get("/api/v1/", function(req, res) {
 app.post("/api/v1/send-grocery-list", function(req, res) {
   // check if email address is available
   if (req.body.email.length === 0) {
-    res.status(500).send({"msg" : "No Email Address available to Mail!"});
+    res.status(500).send({type: "error", msg: "No Email Address available to Mail!"});
     return false;
   }
   // check if grocery list is available
   if (req.body.list.length === 0) {
-    res.status(500).send({"msg" : "No Grocery List Items available to Mail!"});
+    res.status(500).send({type: "error", msg: "No Grocery List Items available to Mail!"});
     return false;
   }
   // build subject text
-  var emailText = "Grocery List Items:\n\n";
-  req.body.list.forEach(function(item) {
-    emailText += "- " + item + "\n"
-  });
+  //var emailText = util.generateBodyText(req.body.list);
+  var emailHtml = util.generateHtmlBodyText(req.body.list);
+  // get email auth password
+  var authPw = process.env.EMAIL_PASSWORD;
   // configure smtp server
   var smtpConfig = {
     host: 'smtp.gmail.com',
@@ -42,27 +43,35 @@ app.post("/api/v1/send-grocery-list", function(req, res) {
     secure: true,
     auth: {
         user: 'socobo.project@gmail.com',
-        pass: process.env.EMAIL_PASSWORD
+        pass: authPw
     }
   };
-  // build email
-  var mailOptions = {
+  // build plain email
+  // var mailOptions = {
+  //   from: "socobo.project@gmail.com",
+  //   to: req.body.email,
+  //   subject: "Socobo Project - Grocery List",
+  //   text: emailText
+  // };
+  // build html email
+  var mailOptionsHtml = {
     from: "socobo.project@gmail.com",
     to: req.body.email,
     subject: "Socobo Project - Grocery List",
-    text: emailText
+    html: emailHtml
   };
   // send email
   var transporter = nodeMailer.createTransport(smtpConfig);
-  transporter.sendMail(mailOptions, function(error, info) {
+  transporter.sendMail(mailOptionsHtml, function(error, info) {
     if (error) {
       // response the error
-      res.status(500).send({"msg" : "An Error appears with sending the Mail! " + error.message});
+      res.status(500).send({type: "error", msg: "An Error appears with sending the Mail!", extra: error.message});
     }
     // response the successful sending
-    res.status(200).send({"msg": "Grocery List Items send to User! " + info.response});
+    res.status(200).send({type: "succes", msg: "Grocery List Items send to User!", extra: info.response});
   });
 });
+
 // start the server
 var server = http.createServer(app).listen(port, function() {
   console.log("Socobo Project Backend is listening on Port: " + port);
