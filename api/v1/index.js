@@ -30,8 +30,6 @@ app.get("/api/v1/", function(req, res) {
 
 // function to send an email with the grocery items to the user
 app.post("/api/v1/send-grocery-list", function(req, res) {
-  console.log("/api/v1/send-grocery-list - entered");
-  console.dir(req.body);
   // check if the request has data inside the body
   if (req.body.length === 0) {
     res.status(500).send({type: "error", msg: "No Request Data available to Mail!"});
@@ -48,27 +46,19 @@ app.post("/api/v1/send-grocery-list", function(req, res) {
     return false;
   }
   // build subject text
-  //var emailText = util.generateBodyText(req.body.list);
   var emailHtml = util.generateHtmlBodyText(req.body.list);
   // get email auth password
-  var authPw = process.env.EMAIL_PASSWORD || "!ScB4bMoCraI4a*";
+  var authPw = process.env.EMAIL_PASSWORD;
   // configure smtp server
   var smtpConfig = {
-    host: 'mail.gmx.net',
+    host: "mail.gmx.net",
     port: 465,
     secure: true,
     auth: {
-        user: 'info.socobo-project@gmx.de',
+        user: "info.socobo-project@gmx.de",
         pass: authPw
     }
   };
-  // build plain email
-  // var mailOptions = {
-  //   from: "socobo.project@gmail.com",
-  //   to: req.body.email,
-  //   subject: "Socobo Project - Grocery List",
-  //   text: emailText
-  // };
   // build html email
   var mailOptionsHtml = {
     from: "info.socobo-project@gmx.de",
@@ -81,11 +71,11 @@ app.post("/api/v1/send-grocery-list", function(req, res) {
   transporter.sendMail(mailOptionsHtml, function(error, info) {
     if (error) {
       // response the error
-      var extraError = error !== null ? error.message : "No extra error information available!";
+      var extraError = typeof error !== "undefined" || error !== null ? error.message : "No extra error information available!";
       res.status(500).send({type: "error", msg: "An Error appears with sending the Mail!", extra: extraError});
     }
     // response the successful sending
-    var extraInfo = info !== null ? info.response : "No extra information available!";
+    var extraInfo = typeof info !== "undefined" || info !== null ? info.response : "No extra information available!";
     res.status(200).send({type: "success", msg: "Grocery List Items send to User!", extra:  extraInfo});
   });
 });
