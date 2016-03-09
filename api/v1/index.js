@@ -16,16 +16,27 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// test function
-app.get("/api/v1/", function(req, res) {
+// backend root
+app.get("/", function(req, res) {
   console.log("Socobo Project Backend is ready to Rock!");
   res.send("Socobo Project Backend is ready to Rock!");
+});
+
+// api root
+app.get("/api/v1/", function(req, res) {
+  console.log("Socobo Project Backend API is ready to Rock!");
+  res.send("Socobo Project Backend API is ready to Rock!");
 });
 
 // function to send an email with the grocery items to the user
 app.post("/api/v1/send-grocery-list", function(req, res) {
   console.log("/api/v1/send-grocery-list - entered");
   console.dir(req.body);
+  // check if the request has data inside the body
+  if (req.body.length === 0) {
+    res.status(500).send({type: "error", msg: "No Request Data available to Mail!"});
+    return false;
+  }
   // check if email address is available
   if (req.body.email.length === 0) {
     res.status(500).send({type: "error", msg: "No Email Address available to Mail!"});
@@ -70,10 +81,12 @@ app.post("/api/v1/send-grocery-list", function(req, res) {
   transporter.sendMail(mailOptionsHtml, function(error, info) {
     if (error) {
       // response the error
-      res.status(500).send({type: "error", msg: "An Error appears with sending the Mail!", extra: error.message});
+      var extraError = error !== null ? error.message : "No extra error information available!";
+      res.status(500).send({type: "error", msg: "An Error appears with sending the Mail!", extra: extraError});
     }
     // response the successful sending
-    res.status(200).send({type: "success", msg: "Grocery List Items send to User!", extra: info.response});
+    var extraInfo = info !== null ? info.response : "No extra information available!";
+    res.status(200).send({type: "success", msg: "Grocery List Items send to User!", extra:  extraInfo});
   });
 });
 
