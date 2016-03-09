@@ -1,6 +1,6 @@
 {
   "name": "socobo-project-backend",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "NodeJS Backend for Socobo Project",
   "author": "flashback2k14",
   "license": "MIT",
@@ -17,7 +17,10 @@
     "url": "https://github.com/flashback2k14/socobo-project-backend/issues"
   },
   "homepage": "https://github.com/flashback2k14/socobo-project-backend#readme",
-  "keywords": [],
+  "keywords": [
+    "socobo-project",
+    "socobo-project-backend"
+  ],
   "engines": {
     "node": "4.2.4"
   }, 

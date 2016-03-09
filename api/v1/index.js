@@ -38,11 +38,11 @@ app.post("/api/v1/send-grocery-list", function(req, res) {
   var authPw = process.env.EMAIL_PASSWORD;
   // configure smtp server
   var smtpConfig = {
-    host: 'smtp.gmail.com',
+    host: 'mail.gmx.net',
     port: 465,
     secure: true,
     auth: {
-        user: 'socobo.project@gmail.com',
+        user: 'info.socobo-project@gmx.de',
         pass: authPw
     }
   };
@@ -55,7 +55,7 @@ app.post("/api/v1/send-grocery-list", function(req, res) {
   // };
   // build html email
   var mailOptionsHtml = {
-    from: "socobo.project@gmail.com",
+    from: "info.socobo-project@gmx.de",
     to: req.body.email,
     subject: "Socobo Project - Grocery List",
     html: emailHtml
