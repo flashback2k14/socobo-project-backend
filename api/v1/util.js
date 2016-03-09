@@ -9,7 +9,7 @@ module.exports = {
   generatePlainBodyText: function(itemList) {
     var emailText = "Grocery List Items:\n\n";
     itemList.forEach(function(item) {
-      emailText += "- " + item + "\n"
+      emailText += "- " + item.desc + "\n"
     });
     return emailText;
   },
@@ -33,7 +33,7 @@ module.exports = {
     emailText += "<ul>"
     
     itemList.forEach(function(item) {
-      emailText += "<li>&#x95; " + item + "</li>"
+      emailText += "<li>&#x95; " + item.desc + "</li>"
     });
     
     emailText += "</ul>"

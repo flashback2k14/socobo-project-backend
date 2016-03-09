@@ -1,5 +1,6 @@
 var http = require("http");
 var express = require("express");
+var cors = require("cors");
 var bodyParser = require("body-parser");
 var nodeMailer = require("nodemailer");
 var util = require("./util");
@@ -7,6 +8,8 @@ var util = require("./util");
 var app = express();
 var port = process.env.PORT || 5005;
 
+// enable cors
+app.use(cors());
 // configure express to get json data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -35,7 +38,7 @@ app.post("/api/v1/send-grocery-list", function(req, res) {
   //var emailText = util.generateBodyText(req.body.list);
   var emailHtml = util.generateHtmlBodyText(req.body.list);
   // get email auth password
-  var authPw = process.env.EMAIL_PASSWORD;
+  var authPw = process.env.EMAIL_PASSWORD || "!ScB4bMoCraI4a*";
   // configure smtp server
   var smtpConfig = {
     host: 'mail.gmx.net',
@@ -68,7 +71,7 @@ app.post("/api/v1/send-grocery-list", function(req, res) {
       res.status(500).send({type: "error", msg: "An Error appears with sending the Mail!", extra: error.message});
     }
     // response the successful sending
-    res.status(200).send({type: "succes", msg: "Grocery List Items send to User!", extra: info.response});
+    res.status(200).send({type: "success", msg: "Grocery List Items send to User!", extra: info.response});
   });
 });
 
