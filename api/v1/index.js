@@ -24,6 +24,8 @@ app.get("/api/v1/", function(req, res) {
 
 // function to send an email with the grocery items to the user
 app.post("/api/v1/send-grocery-list", function(req, res) {
+  console.log("/api/v1/send-grocery-list - entered");
+  console.dir(req.body);
   // check if email address is available
   if (req.body.email.length === 0) {
     res.status(500).send({type: "error", msg: "No Email Address available to Mail!"});
