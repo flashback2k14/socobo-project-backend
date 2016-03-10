@@ -1,12 +1,12 @@
 {
   "name": "socobo-project-backend",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "NodeJS Backend for Socobo Project",
   "author": "flashback2k14",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "start": "node api/v1/index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,7 +22,8 @@
     "socobo-project-backend"
   ],
   "engines": {
-    "node": "4.2.4"
+    "node": "4.2.4",
+    "npm": "3.6.0"
   }, 
   "dependencies": {
     "body-parser": "^1.15.0",
