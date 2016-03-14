@@ -8,7 +8,7 @@ var optionsget = (userId) => {
   return {
     host: BASE_URL,
     port: 443,
-    path: "/profiles/" + userId + "/email.json?auth=" + "dfgkjdfgkfdkg",
+    path: "/profiles/" + userId + "/email.json?auth=" + TOKEN,
     method: "GET"
   };
 };
