@@ -1,7 +1,7 @@
 module.exports = {
   /**
    * Generate Plain Email Body Text
-   * 
+   *
    * @param itemList
    * @returns {String}
    * @function
@@ -13,17 +13,17 @@ module.exports = {
     });
     return emailText;
   },
-  
+
   /**
    * Generate HTML Email Body Text
-   * 
+   *
    * @param itemList
    * @returns {String}
    * @function
    */
   generateHtmlBodyText: function(itemList) {
     var emailText = "";
-    
+
     emailText += "<h1>Socobo Project</h1>";
     emailText += "</br>"
     emailText += "</br>"
@@ -31,13 +31,13 @@ module.exports = {
     emailText += "</br>"
     emailText += "</br>"
     emailText += "<ul>"
-    
+
     itemList.forEach(function(item) {
       emailText += "<li>&#x95; " + item.desc + "</li>"
     });
-    
+
     emailText += "</ul>"
-    
+
     return emailText;
   }
 };
