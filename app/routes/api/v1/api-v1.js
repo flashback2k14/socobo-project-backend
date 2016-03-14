@@ -1,6 +1,8 @@
 var util = require("../../../logic/util");
 var mailer = require("../../../logic/mailer");
 var user = require("../../../logic/user");
+var devEnv = require("../../../../dev-env.json");
+
 
 module.exports = function(express) {
   var api = express.Router();
@@ -27,13 +29,14 @@ module.exports = function(express) {
       return false;
     }
 
-    user.getUserMail(req.get(AUTH_HEADER)).then((email) => {
+    user.getUserMail(req.get(AUTH_HEADER))
+      .then((email) => {
         // get mailer config data
-        var host = process.env.PROVIDER_HOST;
-        var port = process.env.PROVIDER_PORT;
-        var useSsl = process.env.PROVIDER_USE_SSL;
-        var authUser = process.env.EMAIL_ADDRESS;
-        var authPw = process.env.EMAIL_PASSWORD;
+        var host = process.env.PROVIDER_HOST || devEnv.PROVIDER_HOST;
+        var port = process.env.PROVIDER_PORT || devEnv.PROVIDER_PORT;
+        var useSsl = process.env.PROVIDER_USE_SSL || devEnv.PROVIDER_USE_SSL;
+        var authUser = process.env.EMAIL_ADDRESS || devEnv.EMAIL_ADDRESS;
+        var authPw = process.env.EMAIL_PASSWORD || devEnv.EMAIL_PASSWORD;
 
         // setup mailer
         mailer.setup(host, port, useSsl, authUser, authPw);
@@ -46,12 +49,13 @@ module.exports = function(express) {
 
         // send email
         mailer.send(mailer.getSmtpConfig(), mail, function(error, info) {
-        if (error) {
+          if (error) {
             return res.status(500).json({type: "error", msg: error.message});
-        }
-        res.status(200).json(info); });
-
-    }).catch((error) => res.status(500).json(error));
+          }
+          res.status(200).json(info); 
+        });
+        
+    }).catch((error) => res.status(500).json({type: error.code, msg: error.message}));
   });
 
   return api;
