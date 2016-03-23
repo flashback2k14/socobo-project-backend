@@ -1,13 +1,13 @@
 {
   "name": "socobo-project-backend",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "NodeJS Backend for Socobo Project",
   "author": "flashback2k14",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "./node_modules/.bin/mocha --recursive --reporter spec"
+    "test": "./node_modules/.bin/mocha --watch --recursive --reporter spec"
   },
   "repository": {
     "type": "git",

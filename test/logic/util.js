@@ -2,9 +2,17 @@ var expect = require("chai").expect;
 var util = require("../../app/logic/util");
 
 
-describe("Util Methods", () => {
-  describe("Create Email Body Text", () => {
-    it("Convert an Array of Items to a Plain String.", () => {
+describe("Util Class", () => {
+  describe("Util Functions", () => {
+    it("Util has a generatePlainBodyText function.", () => {
+      expect(util.generatePlainBodyText).to.exist;
+    });
+    it("Util has a generateHtmlBodyText function.", () => {
+      expect(util.generateHtmlBodyText).to.exist;
+    });
+  });
+  describe("Util Usage", () => {
+    it("Convert an Array of items to a plain string for email body text.", () => {
       // test input
       var input = [
         {desc: "Butter"},
@@ -20,7 +28,7 @@ describe("Util Methods", () => {
       expect(body).to.equal(output);
     });
     
-    it("Convert an Array of Items to a HTML String", () => {
+    it("Convert an Array of items to a HTML string for email body text.", () => {
       // test input
       var input = [
         {desc: "Butter"},
