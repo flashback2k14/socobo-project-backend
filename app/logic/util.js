@@ -8,7 +8,7 @@ module.exports = {
    * @returns {Boolean | Function}
    * @function
    */
-  checkRequest: function(req, res, next) {
+  checkSendRequest: function(req, res, next) {
     // check if the request has data inside the body
     if (req.get("X-SOCOBO-AUTH") === undefined) {
         res.status(401).send({type: "error", msg: "Not authorized"})

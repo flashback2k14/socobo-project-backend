@@ -5,14 +5,15 @@ var devEnv = require("../../../../dev-env.json");
 
 
 module.exports = function(express) {
+  // get routes from express
   var api = express.Router();
-  
+  // default route
   api.get("/", function(req, res) {
     console.log("Socobo Project Backend API is ready to Rock!");
     res.send("Socobo Project Backend API is ready to Rock!");
   });
-  
-  api.post("/send-grocery-list", util.checkRequest, function(req, res) {
+  // route for sending email to the user
+  api.post("/send-grocery-list", util.checkSendRequest, function(req, res) {
     // get user email from firebase
     user.getUserMail(req.get(util.getAuthHeaderTag()))
       .then((email) => {
@@ -38,6 +39,28 @@ module.exports = function(express) {
         
     }).catch((error) => res.status(500).json({type: error.code, msg: error.message}));
   });
-  
+  // route for getting random image
+  api.get("/get-random-image", function(req, res) {
+    // available images - source: http://lorempixel.com/400/200/food/
+    var imageList = [
+      "image1.jpg",
+      "image2.jpg",
+      "image3.jpg",
+      "image4.jpg",
+      "image5.jpg"
+    ];
+    // get random image
+    var image = imageList[Math.floor(Math.random() * imageList.length)];
+    // options for sendFile
+    var options = {
+      root: "./images/",
+      headers: {
+        "Content-Type": "image/jpeg"
+      }
+    };
+    // send image
+    res.status(200).sendFile(image ? image : "image1.jpg", options);
+  });
+  // return api routes
   return api;
 }
