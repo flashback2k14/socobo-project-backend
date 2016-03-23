@@ -16,6 +16,7 @@
   "showOutput": "always",
   "tasks": [
     {"taskName": "start"},
-    {"taskName": "test"}
+    {"taskName": "test"},
+    {"taskName": "test-local"}
   ]
 }
