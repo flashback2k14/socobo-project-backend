@@ -8,7 +8,8 @@
   "scripts": {
     "start": "node index.js",
     "test": "./node_modules/.bin/mocha --recursive --reporter spec",
-    "test-local": "./node_modules/.bin/mocha --watch --recursive --reporter spec"
+    "test-local": "./node_modules/.bin/mocha --watch --recursive --reporter spec",
+    "test-local-debug": "./node_modules/.bin/mocha --debug-brk"
   },
   "repository": {
     "type": "git",

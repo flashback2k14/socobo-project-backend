@@ -17,6 +17,7 @@
   "tasks": [
     {"taskName": "start"},
     {"taskName": "test"},
-    {"taskName": "test-local"}
+    {"taskName": "test-local"},
+    {"taskName": "test-local-debug"}
   ]
 }
