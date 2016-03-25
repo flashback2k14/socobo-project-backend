@@ -7,9 +7,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "./node_modules/.bin/mocha --recursive --reporter spec",
-    "test-local": "./node_modules/.bin/mocha --watch --recursive --reporter spec",
-    "test-local-debug": "./node_modules/.bin/mocha --debug-brk"
+    "test": "./node_modules/.bin/mocha --recursive --no-timeouts --reporter spec",
+    "test-local": "./node_modules/.bin/mocha --watch --recursive --no-timeouts --reporter spec",
+    "test-local-debug": "./node_modules/.bin/mocha --debug-brk --recursive"
   },
   "repository": {
     "type": "git",

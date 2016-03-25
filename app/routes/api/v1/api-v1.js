@@ -30,12 +30,13 @@ module.exports = function(express) {
         // build email
         var mail = mailer.buildEmail(email, "Socobo Project - Grocery List", emailHtml);
         // send email
-        mailer.send(mailer.getSmtpConfig(), mail, function(error, info) {
-          if (error) {
-            return res.status(500).json({type: "error", msg: error.message});
-          }
-          res.status(200).json(info); 
-        });
+        mailer.send(mailer.getSmtpConfig(), mail)
+          .then((info) => {
+            res.status(200).json(info);
+          })
+          .catch((error) => {
+            res.status(500).json(error);
+          });
         
     }).catch((error) => res.status(500).json({type: error.code, msg: error.message}));
   });

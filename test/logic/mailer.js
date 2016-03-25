@@ -1,5 +1,8 @@
-var expect = require("chai").expect;
+var chai = require("chai");
+var expect = chai.expect;
+var should = chai.should;
 var mailer = require("../../app/logic/mailer")
+
 
 describe("Mailer Class", () => {
   
@@ -30,7 +33,55 @@ describe("Mailer Class", () => {
       expect(mailer.send).to.exist;
     });
   });
+  
   describe("Mailer Usage", () => {
+    
+    var host, port, useSsl, user, pw;
+    var smtpConfig;
+    var to, subject, htmlBody, email;
+    var info, error;
+    
+    beforeEach((done) => {
+      host = "host.host.host";
+      port = 241;
+      useSsl = true;
+      user = "test.test";
+      pw = "dfdghjk";
+      
+      smtpConfig = {
+        host: "host.host.host",
+        port: 241,
+        secure: true,
+        auth: {
+          user: "test.test",
+          pass: "dfdghjk"
+        }
+      };
+      
+      to = "test2.test";
+      subject = "test subject";
+      htmlBody = "<h1>Hello, World!</h1>";
+      
+      email = {
+        from: "test.test",
+        to: to,
+        subject: subject,
+        html: htmlBody
+      };
+      
+      info = {
+        type: "success", 
+        msg: "Grocery List Items send to User!"
+      };
+      
+      error = {
+        type: "error", 
+        msg: "An Error appears with sending the Mail! " + new Error("TEST ERROR").message
+      };
+      
+      done();
+    });
+    
     it("Mailer is not null after requiring.", () => {
       expect(mailer).to.not.equal(null);
     });
@@ -40,11 +91,6 @@ describe("Mailer Class", () => {
     });
     
     it("Mailer has host, port, useSsl, user & pw property after setup function call.", () => {
-      var host = "host.host.host";
-      var port = 241;
-      var useSsl = true;
-      var user = "test.test";
-      var pw = "dfdghjk";
       
       mailer.setup(host, port, useSsl, user, pw);
       
@@ -56,40 +102,21 @@ describe("Mailer Class", () => {
     });
     
     it("Mailer return smtp config object with getSmtpConfig function.", () => {
-      var input = {
-        host: "host.host.host",
-        port: 241,
-        secure: true,
-        auth: {
-          user: "test.test",
-          pass: "dfdghjk"
-        }
-      };
-      
-      var output = mailer.getSmtpConfig();
-      
-      expect(output).to.deep.equal(input);
+      var result = mailer.getSmtpConfig();
+      expect(result).to.deep.equal(smtpConfig);
     });
     
     it("Mailer build email with buildEmail function call.", () => {
-      var to = "test2.test";
-      var subject = "test subject";
-      var htmlBody = "<h1>Hello, World!</h1>";
-      
-      var output = {
-        from: "test.test",
-        to: to,
-        subject: subject,
-        html: htmlBody
-      };
-      
-      var email = mailer.buildEmail(to, subject, htmlBody);
-      
-      expect(email).to.deep.equal(output);
+      var result = mailer.buildEmail(to, subject, htmlBody);
+      expect(result).to.deep.equal(email);
     });
     
-    // it("Mailer send email to the user with send function call.", () => {
-    //   //throw new Error("ToDo");
-    // });
+    it("Mailer reject Error on failed send email to the user with send function call.", () => {
+      return mailer.send(smtpConfig, email)
+        .catch((errorResult) => {
+          expect(errorResult).to.have.property("type");
+          expect(errorResult).to.have.property("msg");
+        });
+    });
   });
 });

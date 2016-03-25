@@ -35,13 +35,15 @@ Mailer.prototype = {
     }
   },
   
-  send: function(config, email, cb) {
-    var transporter = nodeMailer.createTransport(config);
-    transporter.sendMail(email, function(error, info) {
-      if (error) {
-        return cb(new Error("An Error appears with sending the Mail! " + error.message), null);
-      }
-      cb(null, {type: "success", msg: "Grocery List Items send to User!"});
+  send: function(config, email) {
+    return new Promise((resolve, reject) => {
+      var transporter = nodeMailer.createTransport(config);
+      transporter.sendMail(email, function(error, info) {
+        if (error) {
+          return reject({type: "error", msg: "An Error appears with sending the Mail! " + error.message});
+        }
+        resolve({type: "success", msg: "Grocery List Items send to User!"});
+      });
     });
   }
 };
