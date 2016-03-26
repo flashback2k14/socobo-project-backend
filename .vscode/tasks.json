@@ -6,7 +6,7 @@
 // ${fileExtname}: the current opened file's extension
 // ${cwd}: the current working directory of the spawned process
 
-// A task runner that calls npm run
+// A task runner that calls npm run scripts
 {
   "version": "0.1.0",
   "command": "npm",
@@ -16,6 +16,8 @@
   "showOutput": "always",
   "tasks": [
     {"taskName": "start"},
-    {"taskName": "test"}
+    {"taskName": "test"},
+    {"taskName": "test-local"},
+    {"taskName": "test-local-debug"}
   ]
 }
