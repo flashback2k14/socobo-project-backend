@@ -47,14 +47,14 @@ module.exports = function(express) {
       "image1.jpg",
       "image2.jpg",
       "image3.jpg",
-      "image4.jpg",
+      "image4.jpg", 
       "image5.jpg"
     ];
     // get random image
     var image = imageList[Math.floor(Math.random() * imageList.length)];
     // options for sendFile
     var options = {
-      root: "./images/",
+      root: "./app/images/",
       headers: {
         "Content-Type": "image/jpeg"
       }
