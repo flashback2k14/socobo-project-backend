@@ -47,20 +47,32 @@ module.exports = function(express) {
       "image1.jpg",
       "image2.jpg",
       "image3.jpg",
-      "image4.jpg",
+      "image4.jpg", 
       "image5.jpg"
     ];
     // get random image
     var image = imageList[Math.floor(Math.random() * imageList.length)];
     // options for sendFile
     var options = {
-      root: "./images/",
+      root: "./app/images/",
       headers: {
         "Content-Type": "image/jpeg"
       }
     };
     // send image
     res.status(200).sendFile(image ? image : "image1.jpg", options);
+  });
+  // get disclaimer pdf
+  api.get("/get-disclaimer", function(req, res) {
+    // options for sendFile
+    var options = {
+      root: "./app/docs/",
+      headers: {
+        "Content-Type": "application/pdf"
+      }
+    };
+    // send pdf
+    res.status(200).sendFile("disclaimer.pdf", options);
   });
   // return api routes
   return api;
