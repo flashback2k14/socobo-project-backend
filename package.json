@@ -1,9 +1,10 @@
 {
   "name": "socobo-project-backend",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "NodeJS Backend for Socobo Project",
   "author": "flashback2k14",
   "license": "MIT",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -13,12 +14,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/flashback2k14/socobo-project-backend.git"
+    "url": "git+https://github.com/socobo/socobo-project-backend.git"
   },
   "bugs": {
-    "url": "https://github.com/flashback2k14/socobo-project-backend/issues"
+    "url": "https://github.com/socobo/socobo-project-backend/issues"
   },
-  "homepage": "https://github.com/flashback2k14/socobo-project-backend#readme",
+  "homepage": "https://github.com/socobo/socobo-project-backend#readme",
   "keywords": [
     "socobo-project",
     "socobo-project-backend"
